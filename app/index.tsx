@@ -1,38 +1,22 @@
-import * as React from "react";
-import { View } from "react-native";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
+import { View, Text } from "react-native";
+import { Checkbox } from '~/components/ui/checkbox';
+import React from "react";
 
 export default function HomeScreen() {
+  const [checked, setChecked] = React.useState(false);
   return (
-    <View className="flex-1 justify-center items-center gap-5 p-6 bg-background">
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
-        <CardHeader className="items-center">
-          <CardTitle className="pb-2 text-center">Hall Pass</CardTitle>
-          <Text>{new Date().toLocaleTimeString()}</Text>
-        </CardHeader>
 
-        <CardContent>
-          <View className="flex-row justify-center gap-3">
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">An app for</Text>
-              <Text className="text-xl font-semibold">Students</Text>
+    <View className="flex flex-1 py-32 bg-background">
+      <View className="h-20 w-full flex-row border-2">
+            <View className="flex w-24 h-full border-2 items-center justify-center ">             
+              <Checkbox checked={checked} onCheckedChange={setChecked} />
             </View>
-          </View>
-        </CardContent>
-
-        <CardFooter className="flex-col gap-3 pb-6">
-          <View className="flex-row items-center overflow-hidden">
-            <Text>Update me with your app code</Text>
-          </View>
-        </CardFooter>
-      </Card>
+            <View className="flex flex-1 h-full border-2">
+            <Text className="text-foreground text-xl">Feed the cat</Text>
+            <Text className="text-foreground-transparent text-lg">Due in 3 days</Text>
+            
+</View>
+    </View>
     </View>
   );
 }
