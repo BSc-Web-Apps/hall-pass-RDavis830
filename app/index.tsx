@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { Checkbox } from '~/components/ui/checkbox';
 import React from "react";
-import { ExitButton } from '~/assets/images/svg/ExitButton';
+import { ExitButton } from '~/assets/images/svg/calender-icon.svg';
 interface TaskProps {
   title: string;
   category: string;
