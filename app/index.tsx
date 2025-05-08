@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator, Pressable, Modal, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, Pressable, Modal, TextInput, Image } from "react-native";
 import { Checkbox } from '~/components/ui/checkbox';
 import React, { useEffect, useState } from "react";
 import { CircleX, Edit } from 'lucide-react-native';
@@ -7,6 +7,7 @@ import { CirclePlus } from 'lucide-react-native';
 import { useRouter } from "expo-router";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EditPage from "./EditPage";
+//import logo from "assets/images/png/hallpass-checkmark.png";
 
 interface TaskProps {
   title: string;
@@ -24,7 +25,7 @@ interface Task {
   isChecked: boolean;
 }
 
-function Task({ title, category, isChecked, onDelete, onUpdate, id }: TaskProps) {
+export function Task({ title, category, isChecked, onDelete, onUpdate, id }: TaskProps) {
   const [checked, setChecked] = React.useState(isChecked);
   const [modalVisible, setModalVisible] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
@@ -59,19 +60,20 @@ function Task({ title, category, isChecked, onDelete, onUpdate, id }: TaskProps)
     <>
       <View className="h-20 w-4/5 mx-auto flex-row border-b-2 my-2 border-gray-700">
         <View className="flex w-24 h-full border-2 items-center justify-center">             
-          <Checkbox checked={checked} onCheckedChange={setChecked} className="bg-red-500" />
+          <Checkbox checked={checked} onCheckedChange={setChecked} className="bg-white" />
         </View>
         <TouchableOpacity 
           onPress={handleEdit} 
           onLongPress={() => setModalVisible(true)}
           className="flex-1"
+          testID="task-container"
         >
           <View className="flex flex-1 h-full border-2 flex-row items-center">
             <View className="flex-1">
-              <Text className={`w-3/5 text-foreground text-red-500 text-xl ${checked ? 'line-through' : ''}`}>{title}</Text>
-              <Text className="w-3/5 text-foreground-transparent text-lg text-red-500">{category}</Text>
+              <Text className={`w-3/5 text-foreground text-white text-xl ${checked ? 'line-through' : ''}`}>{title}</Text>
+              <Text className="w-3/5 text-foreground-transparent text-lg text-gray-500">{category}</Text>
             </View>
-            {checked && <CircleX size={20} color="red" className="w-1/5" onPress={onDelete} />}
+            {checked && <CircleX size={20} color="white" className="w-1/5" onPress={onDelete} testID="delete-button" />}
           </View>
         </TouchableOpacity>
       </View>
@@ -81,10 +83,11 @@ function Task({ title, category, isChecked, onDelete, onUpdate, id }: TaskProps)
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
+        testID="edit-modal"
       >
         <View className="flex-1 justify-center items-center bg-black/50">
           <View className="w-4/5 bg-background p-4 rounded-lg border-2 border-gray-700">
-            <Text className="text-foreground text-xl mb-4">Edit Task</Text>
+            <Text className="text-foreground text-center text-xl mb-4">Edit Task</Text>
             <View className="space-y-4">
               <View>
                 <Text className="text-foreground text-lg mb-2">Title</Text>
@@ -92,7 +95,7 @@ function Task({ title, category, isChecked, onDelete, onUpdate, id }: TaskProps)
                   className="border-2 border-gray-700 p-2 rounded text-foreground"
                   value={editTitle}
                   onChangeText={setEditTitle}
-                  placeholder="Enter task title"
+                  testID="title-input"
                 />
               </View>
               <View>
@@ -101,15 +104,16 @@ function Task({ title, category, isChecked, onDelete, onUpdate, id }: TaskProps)
                   className="border-2 border-gray-700 p-2 rounded text-foreground"
                   value={editCategory}
                   onChangeText={setEditCategory}
-                  placeholder="Enter category"
+                  testID="category-input"
                 />
               </View>
-              <View className="flex-row space-x-2">
+              <View className="flex-row">
                 <Button 
                   onPress={handleSave}
-                  className="flex-1"
+                  className="flex-1 px-1"
+                  testID="save-button"
                 >
-                  <Text className="text-foreground">Save</Text>
+                  <Text className="text-foreground text-red-500">Save</Text>
                 </Button>
                 <Button 
                   onPress={() => {
@@ -212,6 +216,12 @@ export default function HomeScreen() {
 
   return (
     <View className="flex flex-1 py-32 bg-background">
+      <View className="flex-row items-center justify-center gap-4">
+      <Text className="text-white text-5xl font-bold">HallPass</Text>
+                <Image 
+        source={require("../assets/images/png/hallpass-checkmark.png")}
+        />
+        </View>
       <View className="w-4/5 mx-auto mb-4">
       </View>
       {tasks.map((task) => (

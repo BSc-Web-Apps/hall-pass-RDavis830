@@ -3,6 +3,7 @@
   "main": "index.js",
   "version": "1.0.0",
   "scripts": {
+    "test": "npx jest --config jest.config.js",
     "dev": "expo start -c",
     "dev:web": "expo start -c --web",
     "dev:android": "expo start -c --android",
@@ -13,6 +14,7 @@
     "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
     "@rn-primitives/avatar": "~1.1.0",
@@ -44,13 +46,22 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",
-    "zustand": "^4.4.7",
-    "@react-native-async-storage/async-storage": "1.23.1"
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
+    "@testing-library/react-native": "^12.3.0",
+    "@types/jest": "^29.5.14",
     "@types/react": "~18.3.12",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "react-test-renderer": "^18.2.0",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "react-native",
+    "testsMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  }
 }
